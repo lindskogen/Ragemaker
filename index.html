@@ -11,13 +11,11 @@
 	}
 	body {
 		background: #333;
-		overflow: hidden;
 		color: #fff;
 		font-family: sans-serif;
 	}
 	#main {
 		width: 1100px;
-		height: 585px;
 		margin: 0 auto;
 	}
 	canvas.center {
@@ -34,11 +32,11 @@
 	#main div.side:last-child {
 		float:right;
 	}
-	#main h1 {
+	h1 {
 		margin: 10px 0;
 		text-align: center;
 	}
-	#main h1 span {
+	h1 > span {
 		letter-spacing: -0.1em;
 	}
 	canvas {
@@ -63,7 +61,10 @@
 		height: 90px;
 		display: inline-block;
 		margin: 3px;
-		background: gray;
+		background-position: center center;
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-color: gray;
 		text-align: center;
 		-webkit-user-drag: element;
 		-webkit-user-select: none;
@@ -87,10 +88,10 @@
 	.clearfix { *zoom: 1; }
 </style>
 <script type="text/javascript">
-	var xml;
+	var $loadImage = $('<img/>').attr('src','load.gif'),
+		xml = JSON.parse('{"Neutral":[{"src":"http://ragemaker.com/images/Neutral/01.png"},{"src":"http://ragemaker.com/images/Neutral/02.png"},{"src":"http://ragemaker.com/images/Neutral/03.png"},{"src":"http://ragemaker.com/images/Neutral/04.png"},{"src":"http://ragemaker.com/images/Neutral/07.png"},{"src":"http://ragemaker.com/images/Neutral/12.png"},{"src":"http://ragemaker.com/images/Neutral/13.png"},{"src":"http://ragemaker.com/images/Neutral/15.png"},{"src":"http://ragemaker.com/images/Neutral/37.png"},{"src":"http://ragemaker.com/images/Neutral/38.png"},{"src":"http://ragemaker.com/images/Neutral/BadPokerFace.png"},{"src":"http://ragemaker.com/images/Neutral/French.png"},{"src":"http://ragemaker.com/images/Neutral/Rich%20Fu.png"},{"src":"http://ragemaker.com/images/Neutral/ThingsWentOkay.png"},{"src":"http://ragemaker.com/images/Neutral/basically%20retarded.png"},{"src":"http://ragemaker.com/images/Neutral/concentrate%20inverted%20tongue%20side.png"},{"src":"http://ragemaker.com/images/Neutral/concentrate%20tongue.png"},{"src":"http://ragemaker.com/images/Neutral/dazed%20and%20confused%202.png"},{"src":"http://ragemaker.com/images/Neutral/dude%20come%20on%20smile.png"},{"src":"http://ragemaker.com/images/Neutral/playful%20tongue.png"},{"src":"http://ragemaker.com/images/Neutral/poker%20face%20thick.png"},{"src":"http://ragemaker.com/images/Neutral/poker%20face.png"},{"src":"http://ragemaker.com/images/Neutral/yawn.png"}],"Female Blonde":[{"src":"http://ragemaker.com/images/Female%20Blonde/01blondehair.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_big%20smile.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_concentrated.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_crying.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_dazed.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_determined.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_dude.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_dumbfounded.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_ewbte.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_excited%20bliss.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_excited%20tears.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_excited.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_facepalm.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_fake%20smile.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_forever%20alone.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_freddie.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_fuck%20that%20bitch.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_fuck%20yeah.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_gasp.jpg"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_gasp2.jpg"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_happy.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_hmmm.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_i%20wonder.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_ladystare.jpg"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_ladystare2.jpg"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_lean.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_lol.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_me%20gusta.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_milk.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_normal.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_normal2.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_okay.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_omgrun.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_pfft.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_pokerface.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_quite.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_rage%20canadian.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_rage%20extreme.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_rage%20extreme2.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_rage%20foaming.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_rage%20getting%20pissed.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_rage%20mad.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_rage%20mad2.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_rage%20quiet.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_rage%20shaking.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_rage%20super.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_rage.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_rage2.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_really%20determined.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_red%20tongue.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_schlick.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_smile.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_sweet%20tears.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_tongue%20down.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_troll%20sad.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_troll.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_what.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_why%20no%20hands.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_why.png"},{"src":"http://ragemaker.com/images/Female%20Blonde/blonde_wut.png"}]}');
 	$(function(){ // 610x450 305x225
-		var xmlObject,
-			dragElem = {},
+		var dragElem = {},
 			$canvas = $('#canvas'),
 			$faceDrop = $('#faces-drop'),
 			$faceCon = $('#faces-container'),
@@ -107,28 +108,43 @@
 		ctx.stroke();
 		$faceDrop.change(function(){
 			$faceCon.html('');
-			$(xmlObject[$faceDrop[0].value]).each(function(){
-				$('<span/>').addClass('img').attr('draggable','true').append(this).appendTo($faceCon);
+			$faceCon.toggleClass('loading');
+			$(xml[$faceDrop.val()]).each(function(){
+				var src = this.src;
+				console.log(src);
+				$('<span/>').addClass('img').css('background-image','url('+src+')').data('src',src).attr('draggable','true').appendTo($faceCon);
 			});
+			$faceCon.toggleClass('loading');
 		});
-		$.get("images.xml", function(data){
-			var parsedXML = {},
-				$tag = $(data.getElementsByTagName('category'));
-			$tag.each(function() {
-				var $cat = $(this),
-					catName = $cat.attr('name');
-				parsedXML[catName] = [];
-				$cat.find('image').each(function() {
-					var path = 'http://ragemaker.com/images/' + catName + '/',
-						$img = $('<img/>').attr({'src':path + $(this).attr('name'),'draggable':'false'})[0];
-					parsedXML[catName].push($img);
+
+		$loadImage.ready(function(){
+			$faceCon.addClass('loading');
+			$.get('images.xml', function(data) {
+				var $tag = $(data.getElementsByTagName('category'));
+				xml = {};
+
+				$tag.each(function() {
+					var $cat = $(this),
+						catName = $cat.attr('name');
+					xml[catName] = [];
+					$cat.find('image').each(function() {
+						var path = 'http://ragemaker.com/images/' + catName + '/',
+							$img = $('<img/>').attr('src', path + $(this).attr('name'))[0];
+						xml[catName].push($img);
+					});
+					$('<option/>').val(catName).html(catName).appendTo($faceDrop);
 				});
-				$('<option></option>').val(catName).html(catName).appendTo($faceDrop);
+				$faceCon.removeClass('loading');
+				$faceDrop.change();
+
+			}).error(function() {
+				for (catName in xml)
+					$('<option/>').val(catName).html(catName).appendTo($faceDrop);
+				$faceCon.removeClass('loading');
+				$faceDrop.change();
 			});
-			xml = xmlObject = parsedXML;
-			$faceCon.removeClass('loading');
-			$faceDrop.change();
 		});
+		
 		$canvas.on('dragover',function(event){
 			event.preventDefault();
 		});
@@ -138,22 +154,22 @@
 			if (dragElem === undefined)
 				return false;
 			var x = event.clientX - this.offsetLeft - dragElem.x,
-				y = event.clientY - this.offsetTop  - dragElem.y;
+				y = event.clientY+window.scrollY - this.offsetTop  - dragElem.y;
 			ctx.drawImage(dragElem.elem, x, y);
 			dragElem = undefined;
 		});
 		$faceCon.on('dragstart','span', function(event){
 			event = event.originalEvent;
-			var el = document.createElement('img'),
-				image = this.childNodes[0];
-				offsetX = ((event.clientX-this.offsetLeft)/image.width)*image.naturalWidth,
-				offsetY = ((event.clientY-this.offsetTop + this.parentNode.scrollTop)/image.height)*image.naturalHeight;
+			var el = document.createElement('img');
+			el.src = $(this).data('src');
+
+			var offsetX = ((event.clientX-this.offsetLeft) / 90) * el.naturalWidth,
+				offsetY = ((event.clientY+window.scrollY-this.offsetTop + this.parentNode.scrollTop) / 90) * el.naturalHeight;
 			
-			el.src = image.src;
 			event.dataTransfer.setData('Text',this.name);
 			event.dataTransfer.setDragImage(el, offsetX, offsetY);
 			dragElem = {
-				elem: this.childNodes[0],
+				elem: el,
 				x: offsetX,
 				y: offsetY
 			};
@@ -162,12 +178,11 @@
 </script>
 </head>
 <body>
+	<h1><span>HTML5</span> - <span>RAGEMAKER</span></h1>
 	<div id="main" class="clearfix">
-		<h1><span>HTML5</span> - <span>RAGEMAKER</span></h1>
 		<div class="side clearfix">
 			<select id="faces-drop"></select>
-			<!--<div id="faces-container" class="loading"></div>-->
-			<div id="faces-container" class=""><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/01.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/02.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/03.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/04.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/07.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/12.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/13.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/15.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/37.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/38.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/BadPokerFace.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/French.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/Rich Fu.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/ThingsWentOkay.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/basically retarded.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/concentrate inverted tongue side.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/concentrate tongue.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/dazed and confused 2.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/dude come on smile.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/playful tongue.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/poker face thick.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/poker face.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/yawn.png" draggable="false"></span></div>
+			<div id="faces-container" class="loading"></div>
 		</div>
 		<div id="canvas-div">
 			<canvas id="canvas" width="610" height="580"></canvas>
