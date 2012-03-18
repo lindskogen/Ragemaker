@@ -1,0 +1,179 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>HTML5 - Ragemaker</title>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<style  type="text/css">
+	* { 
+		-moz-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+	body {
+		background: #333;
+		overflow: hidden;
+		color: #fff;
+		font-family: sans-serif;
+	}
+	#main {
+		width: 1100px;
+		height: 585px;
+		margin: 0 auto;
+	}
+	canvas.center {
+		width: 150px;
+		margin: 58px 25px 0;
+	}
+	#main > div {
+		height: 100%;
+		float: left;
+	}
+	#main div.side {
+		width: 210px;
+	}
+	#main div.side:last-child {
+		float:right;
+	}
+	#main h1 {
+		margin: 10px 0;
+		text-align: center;
+	}
+	#main h1 span {
+		letter-spacing: -0.1em;
+	}
+	canvas {
+		background: #fff;
+		overflow-y: scroll;
+	}
+	#canvas-div {
+		width: 650px;
+		padding-left: 20px;
+		overflow-y: scroll;
+	}
+	#faces-drop, #faces-container {
+		width: 100%;
+	}
+	#faces-container {
+		margin-top: 10px;
+		height: 500px;
+		overflow-y: scroll;
+	}
+	#faces-container span.img {
+		width: 90px;
+		height: 90px;
+		display: inline-block;
+		margin: 3px;
+		background: gray;
+		text-align: center;
+		-webkit-user-drag: element;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		user-select: none;
+	}
+	#faces-container span.img:nth-child(odd) {
+		margin-left: 0;
+	}
+	#faces-container img {
+		max-width: 85px;
+		max-height: 85px;
+	}
+	.loading {
+		background: url(load.gif) no-repeat 40px 40px;
+	}
+	::-moz-selection { background: #fe57a1; color: #fff; text-shadow: none; }
+	::selection { background: #fe57a1; color: #fff; text-shadow: none; }
+	.clearfix:before, .clearfix:after { content: ""; display: table; }
+	.clearfix:after { clear: both; }
+	.clearfix { *zoom: 1; }
+</style>
+<script type="text/javascript">
+	var xml;
+	$(function(){ // 610x450 305x225
+		var xmlObject,
+			dragElem = {},
+			$canvas = $('#canvas'),
+			$faceDrop = $('#faces-drop'),
+			$faceCon = $('#faces-container'),
+			ctx = $canvas[0].getContext("2d");
+		ctx.fillStyle = "#fff";
+		ctx.fillRect(0,0,610,450);
+		ctx.strokeRect(0,0,610,450);
+		ctx.beginPath();
+		ctx.moveTo(305,0);
+		ctx.lineTo(305,450);
+		ctx.moveTo(0,225);
+		ctx.lineTo(610,225);
+		ctx.closePath();
+		ctx.stroke();
+		$faceDrop.change(function(){
+			$faceCon.html('');
+			$(xmlObject[$faceDrop[0].value]).each(function(){
+				$('<span/>').addClass('img').attr('draggable','true').append(this).appendTo($faceCon);
+			});
+		});
+		$.get("images.xml", function(data){
+			var parsedXML = {},
+				$tag = $(data.getElementsByTagName('category'));
+			$tag.each(function() {
+				var $cat = $(this),
+					catName = $cat.attr('name');
+				parsedXML[catName] = [];
+				$cat.find('image').each(function() {
+					var path = 'http://ragemaker.com/images/' + catName + '/',
+						$img = $('<img/>').attr({'src':path + $(this).attr('name'),'draggable':'false'})[0];
+					parsedXML[catName].push($img);
+				});
+				$('<option></option>').val(catName).html(catName).appendTo($faceDrop);
+			});
+			xml = xmlObject = parsedXML;
+			$faceCon.removeClass('loading');
+			$faceDrop.change();
+		});
+		$canvas.on('dragover',function(event){
+			event.preventDefault();
+		});
+		$canvas.on('drop', function(event){
+			event.preventDefault();
+			event = event.originalEvent;
+			if (dragElem === undefined)
+				return false;
+			var x = event.clientX - this.offsetLeft - dragElem.x,
+				y = event.clientY - this.offsetTop  - dragElem.y;
+			ctx.drawImage(dragElem.elem, x, y);
+			dragElem = undefined;
+		});
+		$faceCon.on('dragstart','span', function(event){
+			event = event.originalEvent;
+			var el = document.createElement('img'),
+				image = this.childNodes[0];
+				offsetX = ((event.clientX-this.offsetLeft)/image.width)*image.naturalWidth,
+				offsetY = ((event.clientY-this.offsetTop + this.parentNode.scrollTop)/image.height)*image.naturalHeight;
+			
+			el.src = image.src;
+			event.dataTransfer.setData('Text',this.name);
+			event.dataTransfer.setDragImage(el, offsetX, offsetY);
+			dragElem = {
+				elem: this.childNodes[0],
+				x: offsetX,
+				y: offsetY
+			};
+		});
+	});
+</script>
+</head>
+<body>
+	<div id="main" class="clearfix">
+		<h1><span>HTML5</span> - <span>RAGEMAKER</span></h1>
+		<div class="side clearfix">
+			<select id="faces-drop"></select>
+			<!--<div id="faces-container" class="loading"></div>-->
+			<div id="faces-container" class=""><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/01.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/02.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/03.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/04.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/07.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/12.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/13.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/15.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/37.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/38.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/BadPokerFace.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/French.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/Rich Fu.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/ThingsWentOkay.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/basically retarded.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/concentrate inverted tongue side.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/concentrate tongue.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/dazed and confused 2.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/dude come on smile.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/playful tongue.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/poker face thick.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/poker face.png" draggable="false"></span><span class="img" draggable="true"><img src="http://ragemaker.com/images/Neutral/yawn.png" draggable="false"></span></div>
+		</div>
+		<div id="canvas-div">
+			<canvas id="canvas" width="610" height="580"></canvas>
+		</div>
+		<div class="side">
+		</div>
+	</div>
+</body>
+</html>
